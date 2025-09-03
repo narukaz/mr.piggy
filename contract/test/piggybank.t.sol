@@ -363,4 +363,116 @@ contract TestMRPIGGY is Test {
         mrpiggy.mint_DiamondPiggy{value: 0.0007 ether}();
         assertEq(mrpiggy.piggyHealthType(0), 9);
     }
+
+    function test_zeroRace() public view {
+        assertEq(mrpiggy.total_races(), 0, "no race");
+    }
+    function test_create_race() public {
+        address user = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        deal(user, 10 ether);
+        vm.prank(user);
+        mrpiggy.create_race{value: 5 ether}();
+        assertEq(mrpiggy.total_races(), 1);
+    }
+
+    function test_doubleRace() public {
+        address user = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        vm.prank(user);
+        mrpiggy.create_race{value: 5 ether}();
+        vm.prank(user);
+        vm.expectRevert("createRace: Already racing");
+        mrpiggy.create_race{value: 5 ether}();
+    }
+
+    function test_participate_in_race() public {
+        address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        vm.prank(owner);
+        mrpiggy.create_race{value: 5 ether}();
+
+        address userA = address(1);
+        deal(userA, 2 ether);
+        vm.prank(userA);
+        mrpiggy.JoinRace{value: 0.5 ether}();
+
+        vm.prank(userA);
+        mrpiggy.JoinRace{value: 0.5 ether}();
+        //
+        console.log("index of NFT 0", mrpiggy.indexOfracingNft(0));
+        console.log("index of NFT 1", mrpiggy.indexOfracingNft(1));
+        console.log("owner of NFT 0", mrpiggy.ownerOf(0));
+        console.log("owner of NFT 1", mrpiggy.ownerOf(1));
+        console.log("is piggy active", mrpiggy.activePiggy(0));
+        (
+            uint256 totalSaved,
+            uint256 depositCount,
+            uint256 startTime,
+            uint256 lastDeposit,
+            uint256 pledgeAmount,
+            uint256 cycle,
+            uint256 nextExpectedPaymentTimeRange,
+            uint256 goalAmount,
+            uint256 piggyHealth
+        ) = mrpiggy.piggies(1);
+        console.log("totalSaved:", totalSaved);
+        console.log("depositCount:", depositCount);
+        console.log("startTime:", startTime);
+        console.log("lastDeposit:", lastDeposit);
+        console.log("pledgeAmount:", pledgeAmount);
+        console.log("cycle:", cycle);
+        console.log(
+            "nextExpectedPaymentTimeRange:",
+            nextExpectedPaymentTimeRange
+        );
+        console.log("goalAmount:", goalAmount);
+        console.log("piggyHealth:", piggyHealth);
+    }
+
+    function test_RevertIf_raceAlreadyStarted() public {
+        address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        vm.prank(owner);
+        mrpiggy.create_race{value: 5 ether}();
+        vm.warp(12 days);
+        address userA = address(1);
+        deal(userA, 2 ether);
+        vm.prank(userA);
+        vm.expectRevert();
+        mrpiggy.JoinRace{value: 0.5 ether}();
+    }
+
+    function test_full_race() public {
+        address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        vm.prank(owner);
+        mrpiggy.create_race{value: 5 ether}();
+
+        address userA = address(1);
+        deal(userA, 2 ether);
+        //
+        address userB = address(2);
+        deal(userB, 2 ether);
+        //
+        address userC = address(3);
+        deal(userC, 2 ether);
+        //
+        address userD = address(4);
+        deal(userD, 2 ether);
+        //
+        address userE = address(5);
+        deal(userE, 2 ether);
+        //
+
+        vm.prank(userA); //nft 0
+        mrpiggy.JoinRace{value: 0.5 ether}();
+        //-
+        vm.prank(userB); //nft 1
+        mrpiggy.JoinRace{value: 0.5 ether}();
+        //-
+        vm.prank(userC); //nft 2
+        mrpiggy.JoinRace{value: 0.5 ether}();
+        //-
+        vm.prank(userD); //nft 3
+        mrpiggy.JoinRace{value: 0.5 ether}();
+        //-
+        vm.prank(userD); //nft 4
+        mrpiggy.JoinRace{value: 0.5 ether}();
+    }
 }

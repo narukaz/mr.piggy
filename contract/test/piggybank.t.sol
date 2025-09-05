@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 import {Test, console, stdError} from "forge-std/Test.sol";
 import {MRPIGGY} from "../src/piggy_bank.sol";
 import {IERC721Errors} from "openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol";
+import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 
 contract TestMRPIGGY is Test {
     MRPIGGY public mrpiggy;
@@ -89,7 +90,7 @@ contract TestMRPIGGY is Test {
         vm.prank(address(1));
         mrpiggy.activatePiggy(0, 0.005 ether, 0.03 ether, 3 days);
 
-        vm.expectRevert("depositToPiggy: must send exact pledge amount");
+        vm.expectRevert("DepositToPiggy: must send exact pledge amount");
         vm.prank(address(1));
         mrpiggy.depositToPiggy{value: 0.002 ether}(0);
     }
@@ -252,7 +253,7 @@ contract TestMRPIGGY is Test {
 
         vm.prank(user);
         vm.expectRevert(
-            "DepositeToPiggy: piggy with 0 health, only can be burned"
+            "DepositToPiggy: piggy with 0 health, only can be burned"
         );
         mrpiggy.depositToPiggy{value: 0.001 ether}(0);
     }
@@ -439,40 +440,206 @@ contract TestMRPIGGY is Test {
         mrpiggy.JoinRace{value: 0.5 ether}();
     }
 
+    // function test_full_race() public {
+    //     address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+    //     vm.prank(owner);
+    //     mrpiggy.create_race{value: 5 ether}();
+
+    //     uint256 totalUsers = 10;
+    //     address[] memory users = new address[](totalUsers);
+    //     for (uint256 i = 0; i < totalUsers; i++) {
+    //         users[i] = address(uint160(i + 1));
+    //         deal(users[i], 130 ether);
+    //     }
+
+    //     uint256 depositAmount = 10 ether;
+    //     uint256 joinFee = 0.5 ether;
+    //     uint256 totalCycles = 12;
+    //     uint256 cycleDuration = 30 days;
+    //     (uint256 raceStartTime, , , , , , ) = mrpiggy.races(0);
+
+    //     // Join race for all users
+    //     for (uint256 i = 0; i < totalUsers; i++) {
+    //         vm.prank(users[i]);
+    //         mrpiggy.JoinRace{value: joinFee}();
+    //     }
+
+    //     // Warp to race start time
+    //     vm.warp(raceStartTime + 1);
+
+    //     // Simulate deposits for 12 cycles
+    //     for (uint256 cycle = 0; cycle < totalCycles; cycle++) {
+    //         for (uint256 i = 0; i < totalUsers; i++) {
+    //             (, , , , , , , , uint256 piggyHealth) = mrpiggy.piggies(i);
+    //             (, uint256 depositNumber, , , , , , , ) = mrpiggy.piggies(i);
+    //             depositNumber += 1;
+
+    //             if (piggyHealth > 0) {
+    //                 // Users 0-2: Perfect health (10)
+    //                 if (i <= 2) {
+    //                     vm.prank(users[i]);
+    //                     mrpiggy.depositToPiggy{value: depositAmount}(i);
+    //                 }
+    //                 // Users 3-5: Health 7 (miss 3 payments)
+    //                 else if (i > 2 && i <= 5 && depositNumber <= 9) {
+    //                     vm.prank(users[i]);
+    //                     mrpiggy.depositToPiggy{value: depositAmount}(i);
+    //                 }
+    //                 // Users 6-7: Health < 5 (miss 6 payments)
+    //                 else if (i > 5 && i <= 7 && depositNumber <= 6) {
+    //                     vm.prank(users[i]);
+    //                     mrpiggy.depositToPiggy{value: depositAmount}(i);
+    //                 }
+    //                 // Users 8-9: Health < 5 (miss almost all payments)
+    //                 else if (i > 7 && i <= 9 && depositNumber <= 3) {
+    //                     vm.prank(users[i]);
+    //                     mrpiggy.depositToPiggy{value: depositAmount}(i);
+    //                 }
+    //             }
+    //         }
+    //         vm.warp(block.timestamp + cycleDuration);
+    //     }
+
+    //     // Warp to race end time
+    //     (, uint256 endTime, , , , , ) = mrpiggy.races(0);
+    //     vm.warp(endTime + 1);
+
+    //     // End the race
+    //     vm.prank(owner);
+    //     mrpiggy.EndRace();
+
+    //     // Verify a user who quit the race earlier
+    //     uint256 tokenIdToQuit = 0; // Assuming the first user quits
+    //     address userWhoQuits = users[tokenIdToQuit];
+    //     uint256 initialUserBalance = userWhoQuits.balance;
+
+    //     vm.prank(userWhoQuits);
+    //     mrpiggy.quit_race(tokenIdToQuit);
+
+    //     (uint256 piggySaved, , , , , , , , ) = mrpiggy.piggies(tokenIdToQuit);
+    //     uint256 penalty = (piggySaved * 2) / 100;
+    //     uint256 expectedRefund = piggySaved - penalty;
+
+    //     assertEq(
+    //         userWhoQuits.balance,
+    //         initialUserBalance + expectedRefund,
+    //         "Refund was incorrect"
+    //     );
+    // }
+
+    function test_quit_race() public {
+        address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
+        vm.prank(owner);
+        mrpiggy.create_race{value: 5 ether}();
+
+        address userA = makeAddr("userA");
+        deal(userA, 130 ether);
+
+        uint256 joinFee = 0.5 ether;
+        uint256 depositAmount = 10 ether;
+        uint256 tokenIdToQuit = 0;
+
+        vm.prank(userA);
+        mrpiggy.JoinRace{value: joinFee}();
+
+        (uint256 raceStartTime, , , , , , ) = mrpiggy.races(0);
+        vm.warp(raceStartTime + 30 days + 1);
+
+        vm.prank(userA);
+        mrpiggy.depositToPiggy{value: depositAmount}(0);
+
+        // Get the piggySaved amount BEFORE calling quit_race
+        (uint256 piggySaved, , , , , , , , ) = mrpiggy.piggies(tokenIdToQuit);
+
+        // Now get the balance before the refund
+        uint256 balanceBeforeQuit = userA.balance;
+
+        // Call the quit_race function
+        vm.prank(userA);
+        mrpiggy.quit_race(tokenIdToQuit);
+
+        // Calculate the expected refund using the saved amount
+        uint256 penalty = (piggySaved * 2) / 100;
+        uint256 expectedRefund = piggySaved - penalty;
+
+        // Assert that the user's final balance is their balance before quitting + the expected refund
+        assertEq(
+            userA.balance,
+            balanceBeforeQuit + expectedRefund,
+            "Refund was incorrect"
+        );
+
+        // Also assert that the token was burned
+        assertEq(mrpiggy.balanceOf(userA), 0, "Token was not burned");
+    }
+
     function test_full_race() public {
         address owner = address(0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496);
         vm.prank(owner);
         mrpiggy.create_race{value: 5 ether}();
 
-        address userA = address(1);
-        deal(userA, 2 ether);
-        //
-        address userB = address(2);
-        deal(userB, 2 ether);
-        //
-        address userC = address(3);
-        deal(userC, 2 ether);
-        //
-        address userD = address(4);
-        deal(userD, 2 ether);
-        //
-        address userE = address(5);
-        deal(userE, 2 ether);
-        //
+        uint256 totalUsers = 10;
+        address[] memory users = new address[](totalUsers);
+        for (uint256 i = 0; i < totalUsers; i++) {
+            users[i] = makeAddr(string.concat("user", Strings.toString(i)));
+            deal(users[i], 130 ether);
+        }
 
-        vm.prank(userA); //nft 0
-        mrpiggy.JoinRace{value: 0.5 ether}();
-        //-
-        vm.prank(userB); //nft 1
-        mrpiggy.JoinRace{value: 0.5 ether}();
-        //-
-        vm.prank(userC); //nft 2
-        mrpiggy.JoinRace{value: 0.5 ether}();
-        //-
-        vm.prank(userD); //nft 3
-        mrpiggy.JoinRace{value: 0.5 ether}();
-        //-
-        vm.prank(userD); //nft 4
-        mrpiggy.JoinRace{value: 0.5 ether}();
+        uint256 depositAmount = 10 ether;
+        uint256 joinFee = 0.5 ether;
+        uint256 totalCycles = 12;
+        uint256 cycleDuration = 30 days;
+        (uint256 raceStartTime, , , , , , ) = mrpiggy.races(0);
+
+        // Join race for all users
+        for (uint256 i = 0; i < totalUsers; i++) {
+            vm.prank(users[i]);
+            mrpiggy.JoinRace{value: joinFee}();
+        }
+
+        // Warp to race start time
+        vm.warp(raceStartTime + 1);
+
+        // Simulate deposits for 12 cycles
+        for (uint256 cycle = 0; cycle < totalCycles; cycle++) {
+            for (uint256 i = 0; i < totalUsers; i++) {
+                (
+                    ,
+                    uint256 depositNumber,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    ,
+                    uint256 piggyHealth
+                ) = mrpiggy.piggies(i);
+
+                if (piggyHealth > 0) {
+                    if (i <= 2) {
+                        vm.prank(users[i]);
+                        mrpiggy.depositToPiggy{value: depositAmount}(i);
+                    } else if (i > 2 && i <= 5 && depositNumber <= 9) {
+                        vm.prank(users[i]);
+                        mrpiggy.depositToPiggy{value: depositAmount}(i);
+                    } else if (i > 5 && i <= 7 && depositNumber <= 6) {
+                        vm.prank(users[i]);
+                        mrpiggy.depositToPiggy{value: depositAmount}(i);
+                    } else if (i > 7 && i <= 9 && depositNumber <= 3) {
+                        vm.prank(users[i]);
+                        mrpiggy.depositToPiggy{value: depositAmount}(i);
+                    }
+                }
+            }
+            vm.warp(block.timestamp + cycleDuration);
+        }
+
+        // Warp to race end time
+        (, uint256 endTime, , , , , ) = mrpiggy.races(0);
+        vm.warp(endTime + 1);
+
+        // End the race
+        vm.prank(owner);
+        mrpiggy.EndRace();
     }
 }

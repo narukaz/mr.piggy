@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.46 12.46">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #497f5b;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M11.86,4.75h.6v2.97h-.6v-2.97Z"/>
+      <path class="cls-1" d="M11.27,1.19V0h-.59v.59h-.6v.6h-.59v1.78h1.78v-.59h.59v-.6h.6v-.59s-1.19,0-1.19,0Z"/>
+      <path class="cls-1" d="M11.27,7.71h.59v1.19h-.59v-1.19Z"/>
+      <path class="cls-1" d="M11.27,3.56h.59v1.19h-.59v-1.19Z"/>
+      <path class="cls-1" d="M10.68,8.9h.59v1.19h-.59v-1.19Z"/>
+      <path class="cls-1" d="M10.08,10.09h.6v.59h-.6v-.59Z"/>
+      <path class="cls-1" d="M8.9,10.68h1.18v.59h-1.18v-.59Z"/>
+      <path class="cls-1" d="M8.9,2.97h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M8.3,3.56h.6v.6h-.6v-.6Z"/>
+      <path class="cls-1" d="M7.71,11.27h1.19v.6h-1.19v-.6Z"/>
+      <path class="cls-1" d="M7.71,5.34h.59v1.78h-.59v-1.78Z"/>
+      <path class="cls-1" d="M7.71,4.15h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M7.71.59h1.19v.6h-1.19v-.6Z"/>
+      <path class="cls-1" d="M7.12,7.12h.6v.59h-.6v-.59Z"/>
+      <path class="cls-1" d="M7.12,4.75h.6v.6h-.6v-.6Z"/>
+      <path class="cls-1" d="M4.75,11.87h2.97v.59h-2.97v-.59Z"/>
+      <path class="cls-1" d="M6.53,5.34h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M5.34,7.71h1.78v.59h-1.78v-.59Z"/>
+      <path class="cls-1" d="M5.93,5.93h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M5.34,4.15h1.78v.59h-1.78v-.59Z"/>
+      <path class="cls-1" d="M4.75,0h2.97v.59h-2.97v-.59Z"/>
+      <path class="cls-1" d="M4.75,7.12h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M4.75,4.75h.59v.6h-.59v-.6Z"/>
+      <path class="cls-1" d="M3.56,11.27h1.19v.6h-1.19v-.6Z"/>
+      <path class="cls-1" d="M4.15,5.34h.6v1.78h-.6v-1.78Z"/>
+      <path class="cls-1" d="M3.56.59h1.19v.6h-1.19v-.6Z"/>
+      <path class="cls-1" d="M2.37,10.68h1.19v.59h-1.19v-.59Z"/>
+      <path class="cls-1" d="M2.37,1.19h1.19v.59h-1.19v-.59Z"/>
+      <path class="cls-1" d="M2.97,4.75h.59v-1.19h1.19v-.59h3.56v-.59h-.59v-.6h-2.97v.6h-1.19v.59h-.59v.59h-.6v1.19h-.59v2.97h.59v1.19h.6v.59h.59v.6h1.19v.59h2.97v-.59h1.19v-.6h.59v-.59h.59v-1.19h.6v-2.97h-.6v-.59h-.59v3.56h-.59v1.19h-.6v.59h-3.56v-.59h-1.19v-1.19h-.59v-2.97Z"/>
+      <path class="cls-1" d="M1.78,10.09h.59v.59h-.59v-.59Z"/>
+      <path class="cls-1" d="M1.78,1.78h.59v.6h-.59v-.6Z"/>
+      <path class="cls-1" d="M1.19,8.9h.59v1.19h-.59v-1.19Z"/>
+      <path class="cls-1" d="M1.19,2.38h.59v1.18h-.59v-1.18Z"/>
+      <path class="cls-1" d="M.59,7.71h.6v1.19h-.6v-1.19Z"/>
+      <path class="cls-1" d="M.59,3.56h.6v1.19h-.6v-1.19Z"/>
+      <path class="cls-1" d="M0,4.75h.59v2.97h-.59v-2.97Z"/>
+    </g>
+  </g>
+</svg>

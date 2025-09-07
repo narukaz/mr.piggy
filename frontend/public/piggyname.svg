@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.43 8.08">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff99c3;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M8.98,3.59h.45v1.79h-.45v-1.79Z"/>
+      <path class="cls-1" d="M8.98.45h.45v1.8h-.45V.45Z"/>
+      <path class="cls-1" d="M8.53,5.39h.45v.9h-.45v-.9Z"/>
+      <path class="cls-1" d="M8.53,2.25h.45v1.35h-.45v-1.35Z"/>
+      <path class="cls-1" d="M8.08,6.29h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M8.08,1.79h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M7.64,6.73h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M7.64,1.35h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M6.74,0h2.25v.45h-2.25v-.45Z"/>
+      <path class="cls-1" d="M6.29,7.19h1.35v.45h-1.35v-.45Z"/>
+      <path class="cls-1" d="M6.29.45h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M6.29,4.04h-3.14v.45h-.45v1.35h.45v.45h3.14v-.45h.45v-1.35h-.45v-.45ZM4.49,5.84h-.9v-.9h.9v.9ZM5.84,5.84h-.9v-.9h.9v.9Z"/>
+      <path class="cls-1" d="M3.14,7.63h3.14v.45h-3.14v-.45Z"/>
+      <path class="cls-1" d="M5.39,3.14h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M3.59,3.14h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M3.14,0h3.14v.45h-3.14v-.45Z"/>
+      <path class="cls-1" d="M1.8,7.19h1.35v.45h-1.35v-.45Z"/>
+      <path class="cls-1" d="M2.7.45h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M1.35,6.73h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M1.35,1.35h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M.9,6.29h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M.9,1.79h.45v.45h-.45v-.45Z"/>
+      <path class="cls-1" d="M.45,0h2.25v.45H.45v-.45Z"/>
+      <path class="cls-1" d="M.45,5.39h.45v.9h-.45v-.9Z"/>
+      <path class="cls-1" d="M.45,2.25h.45v1.35h-.45v-1.35Z"/>
+      <path class="cls-1" d="M0,3.59h.45v1.79h-.45v-1.79Z"/>
+      <path class="cls-1" d="M0,.45h.45v1.8h-.45V.45Z"/>
+    </g>
+  </g>
+</svg>

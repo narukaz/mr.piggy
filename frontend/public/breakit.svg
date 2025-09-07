@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.95 9.95">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M9.45,3.48h.5v1h-.5v-1Z"/>
+      <path class="cls-1" d="M8.96,4.48h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M8.46,4.98h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M8.46,2.99h.99v.5h-.99v-.5Z"/>
+      <path class="cls-1" d="M7.96,3.48h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M7.96,2.49h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M7.46,5.47h1v.5h-1v-.5Z"/>
+      <path class="cls-1" d="M7.46,3.98h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M7.46,1.99h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M6.97,4.48h.5v.99h-.5v-.99Z"/>
+      <path class="cls-1" d="M6.97,1.49h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M6.47,3.98h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M6.47,1h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M5.97,4.48h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M5.97.5h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M5.47,4.48h-.5v-.5h-.5v.5h-.5v.5h.5v.5h-.5v.5h-.5v.5h-.5v-.5h-.5v.5h-.5v.5h-.5v.5h-.5v.5h-.5v.5h-.5v1h.5v.5h.99v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h.5v-.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M4.98,2.99h.5v.99h-.5v-.99Z"/>
+      <path class="cls-1" d="M4.48,0h1.49v.5h-1.49v-.5Z"/>
+      <path class="cls-1" d="M4.48,2.49h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M3.48,1.99h1v.5h-1v-.5Z"/>
+      <path class="cls-1" d="M3.48.5h1v.5h-1v-.5Z"/>
+      <path class="cls-1" d="M3.48,4.98h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M2.99,5.47h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M2.99,2.49h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M2.99,1h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M2.49,1.49h.5v1h-.5v-1Z"/>
+    </g>
+  </g>
+</svg>

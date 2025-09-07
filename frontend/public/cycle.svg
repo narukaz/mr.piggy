@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.52 8.52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #50c1ff;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M8.02,3.01h.5v2.51h-.5v-2.51Z"/>
+      <path class="cls-1" d="M7.52,5.52h.5v1h-.5v-1Z"/>
+      <path class="cls-1" d="M7.52,2h.5v1h-.5v-1Z"/>
+      <path class="cls-1" d="M8.02,1.5v-.5h.5v-.5h-2.51v2.51h.5v-.5h.5v-.5h.5v-.5s.5,0,.5,0Z"/>
+      <path class="cls-1" d="M7.02,6.52h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M6.52,7.02h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M5.52,7.52h1v.5h-1v-.5Z"/>
+      <path class="cls-1" d="M3.51,8.02h2.01v.5h-2.01v-.5Z"/>
+      <path class="cls-1" d="M3.01,0h2.01v.5h-2.01v-.5Z"/>
+      <path class="cls-1" d="M2,.5h1v.5h-1v-.5Z"/>
+      <path class="cls-1" d="M1.5,1h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M1,1.5h.5v.5h-.5v-.5Z"/>
+      <path class="cls-1" d="M.5,7.02v.5h-.5v.5h2.51v-2.51h-.5v.5h-.5v.5h-.5v.5s-.5,0-.5,0Z"/>
+      <path class="cls-1" d="M.5,5.52h.5v1h-.5v-1Z"/>
+      <path class="cls-1" d="M.5,2h.5v1h-.5v-1Z"/>
+      <path class="cls-1" d="M0,3.01h.5v2.51h-.5v-2.51Z"/>
+    </g>
+  </g>
+</svg>

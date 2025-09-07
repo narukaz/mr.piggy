@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 51">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #a87c82;
+      }
+
+      .cls-2 {
+        fill: #eaeaea;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <rect x="39.01" y="1.83" width="1.04" height="1.04"/>
+      <rect x="39.01" y="47.65" width="1.04" height="1.04"/>
+      <g>
+        <g>
+          <path d="M41,1V0H1v1.07H0v48.94h.98v.99h40.02v-1h1V1h-1ZM37,5v41H5V5h32Z"/>
+          <path class="cls-1" d="M1,1v49h40V1H1ZM38,47H4V4h34v43Z"/>
+          <g>
+            <polygon class="cls-2" points="4 6.51 4 26.04 1 25.32 1 5.84 4 6.51"/>
+            <polygon class="cls-2" points="41 14.77 41 34.98 38 34.26 38 14.1 41 14.77"/>
+          </g>
+        </g>
+        <rect x="2.01" y="1.83" width="1.04" height="1.04"/>
+        <rect x="2.01" y="47.65" width="1.04" height="1.04"/>
+        <g>
+          <rect x="4" y="4" width="5.91" height="5.91"/>
+          <rect class="cls-1" x="3.78" y="3.78" width="3.67" height="3.67"/>
+        </g>
+        <g>
+          <rect x="4" y="42.06" width="5.91" height="4.89"/>
+          <rect class="cls-1" x="3.78" y="43.34" width="3.67" height="3.67"/>
+        </g>
+        <rect x="38.01" y="1.83" width="1.04" height="1.04"/>
+        <rect x="38.01" y="47.65" width="1.04" height="1.04"/>
+      </g>
+      <g>
+        <rect x="31.95" y="4" width="5.91" height="5.91" transform="translate(69.81 13.91) rotate(180)"/>
+        <rect class="cls-1" x="34.41" y="3.78" width="3.67" height="3.67" transform="translate(72.49 11.23) rotate(180)"/>
+      </g>
+      <g>
+        <rect x="32.98" y="42.15" width="4.81" height="4.81" transform="translate(70.78 89.11) rotate(180)"/>
+        <rect class="cls-1" x="34.34" y="43.34" width="3.67" height="3.67" transform="translate(72.36 90.36) rotate(180)"/>
+      </g>
+    </g>
+  </g>
+</svg>

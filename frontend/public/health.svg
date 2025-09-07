@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.07 9.07">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f45f52;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M8.63,3.45h.43v2.16h-.43v-2.16Z"/>
+      <path class="cls-1" d="M8.2,5.61h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M8.2,2.59h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M7.77,6.48h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M7.77,1.73h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M7.34,7.34h.43v.43h-.43v-.43Z"/>
+      <path class="cls-1" d="M7.34,1.3h.43v.43h-.43v-.43Z"/>
+      <path class="cls-1" d="M6.48,7.77h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M6.91,3.02h-.43v-.43h-1.3v.43h-.43v.43h-.43v-.43h-.43v-.43h-1.3v.43h-.43v.43h-.43v1.3h.43v.43h.43v.43h.43v.43h.43v.43h.43v.43h.43v.43h.43v-.43h.43v-.43h.43v-.43h.43v-.43h.43v-.43h.43v-.43h.43v-1.3h-.43v-.43ZM6.48,4.75h-.43v-.86h-.86v-.43h.86v.43h.43v.86Z"/>
+      <path class="cls-1" d="M6.48.86h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M5.61,8.2h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M5.61.43h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M3.45,8.64h2.16v.43h-2.16v-.43Z"/>
+      <path class="cls-1" d="M3.45,0h2.16v.43h-2.16v-.43Z"/>
+      <path class="cls-1" d="M2.59,8.2h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M2.59.43h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M1.73,7.77h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M1.73.86h.86v.43h-.86v-.43Z"/>
+      <path class="cls-1" d="M1.3,7.34h.43v.43h-.43v-.43Z"/>
+      <path class="cls-1" d="M1.3,1.3h.43v.43h-.43v-.43Z"/>
+      <path class="cls-1" d="M.86,6.48h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M.86,1.73h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M.43,5.61h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M.43,2.59h.43v.86h-.43v-.86Z"/>
+      <path class="cls-1" d="M0,3.45h.43v2.16h-.43v-2.16Z"/>
+    </g>
+  </g>
+</svg>

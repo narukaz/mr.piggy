@@ -73,10 +73,22 @@ function PiggyCard({
 
   return (
     <div className="flex flex-col gap-4 px-6 py-6 bg-white min-w-[250px] rounded-2xl text-black items-center shadow-lg border-2 border-gray-200">
-      <div
-        className="w-32 h-32 bg-contain bg-center bg-no-repeat mb-4 flex items-center justify-center"
-        style={{ backgroundImage: `url(${frame})` }}
-      ></div>
+      {/* FIX: Replaced the background div with a layered image structure */}
+      <div className="relative w-32 h-32 mb-4">
+        {/* Placeholder for the piggy image (bottom layer) */}
+        <img
+          src="https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeiavqtowxksrgfyf7btcydeh2fhbvm3h3qw2ueecucrzbebzeb5h6a/2.jpg"
+          alt={`${name} Placeholder`}
+          className=" w-auto h-auto object-cover rounded-full scale-75"
+        />
+        {/* The frame image (top layer) */}
+        <img
+          src={frame}
+          alt={`${name} frame`}
+          className="absolute inset-0 w-full h-full object-contain z-10"
+        />
+      </div>
+
       <h2 className="text-2xl font-bold text-gray-800 font-['Pixelify_Sans']">
         {name}
       </h2>
@@ -113,7 +125,6 @@ function PiggyCard({
   );
 }
 
-// --- Main Market Component (Default Export) ---
 function Market() {
   const piggies = [
     {
@@ -124,7 +135,7 @@ function Market() {
       bullets: [
         "Health: 3",
         "Tracks your feeding streaks.",
-        "3% bonus on goal completion.", // FIX: Added bonus benefit
+        "3% bonus on goal completion.",
       ],
     },
     {
@@ -135,7 +146,7 @@ function Market() {
       bullets: [
         "Health: 5",
         "Slightly increased health.",
-        "5% bonus on goal completion.", // FIX: Added bonus benefit
+        "5% bonus on goal completion.",
       ],
     },
     {
@@ -146,7 +157,7 @@ function Market() {
       bullets: [
         "Health: 6",
         "Substantially increased health.",
-        "6% bonus on goal completion.", // FIX: Added bonus benefit
+        "6% bonus on goal completion.",
       ],
     },
     {
@@ -157,7 +168,7 @@ function Market() {
       bullets: [
         "Health: 7",
         "Impressive health reserve.",
-        "7% bonus on goal completion.", // FIX: Added bonus benefit
+        "7% bonus on goal completion.",
       ],
     },
     {
@@ -168,7 +179,7 @@ function Market() {
       bullets: [
         "Health: 9",
         "Unmatched health and resilience.",
-        "9% bonus on goal completion.", // FIX: Added bonus benefit
+        "9% bonus on goal completion.",
       ],
     },
   ];

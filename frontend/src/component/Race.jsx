@@ -9,6 +9,7 @@ import master_abi from "../ABI/abi.json";
 import contract from "../contract/contract.json";
 import { formatEther, parseEther } from "viem";
 import { readContract } from "wagmi/actions";
+import PiggyImage from "./PiggyImage";
 
 // --- Reusable Child Components ---
 
@@ -343,7 +344,7 @@ function Race() {
                 <div className="flex items-center justify-between gap-4 md:gap-6 relative z-10 w-full px-2 md:px-4">
                   <div className="flex items-center gap-4 md:gap-6 flex-grow">
                     <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-xs">Image</span>
+                      <PiggyImage tokenId={pig.tokenId} />
                     </div>
                     <div className="flex flex-col flex-grow">
                       <div className="flex items-center gap-2 mb-2">

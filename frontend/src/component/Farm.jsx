@@ -17,6 +17,7 @@ import {
   waitForTransactionReceipt,
 } from "wagmi/actions";
 import Activate_piggy_dialouge from "./Activate_piggy_dialouge";
+import PiggyImage from "./PiggyImage";
 
 // --- CHILD COMPONENTS ---
 
@@ -60,7 +61,7 @@ function BreakPiggyButton({ tokenId, onStatusChange, onSuccess }) {
         message: `Piggy #${tokenId} has been cracked!`,
       });
       onSuccess();
-      statusTimer = setTimeout(() => onStatusChange(null), 3000);
+      statusTimer = setTimeout(() => onStatusChange(null), 8000);
     }
     const error = simulationError || receiptError;
     if (error) {
@@ -68,7 +69,7 @@ function BreakPiggyButton({ tokenId, onStatusChange, onSuccess }) {
         status: "error",
         message: error.shortMessage || "Failed to crack piggy.",
       });
-      statusTimer = setTimeout(() => onStatusChange(null), 5000);
+      statusTimer = setTimeout(() => onStatusChange(null), 8000);
     }
     return () => {
       if (statusTimer) clearTimeout(statusTimer);
@@ -99,7 +100,7 @@ function BreakPiggyButton({ tokenId, onStatusChange, onSuccess }) {
     <button
       onClick={handleBreakPiggy}
       disabled={!simulation?.request || isWritePending || isConfirming}
-      className="relative w-24 h-10 md:w-32 md:h-12 font-Pixel bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+      className="relative w-24 h-10 md:w-32 md:h-12 font-Pixel hover:scale-110 bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed transition-all"
       style={{ backgroundImage: "url(/break_button.svg)" }}
     >
       {isConfirming ? "Cracking..." : isWritePending ? "Confirm..." : "Crack"}
@@ -155,7 +156,7 @@ const ActivePiggies = ({
                     style={{ backgroundImage: "url(/image_frame.svg)" }}
                     className="w-16 h-16 md:w-20 md:h-20 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0"
                   >
-                    <span className="text-white text-xs">Image</span>
+                    <PiggyImage tokenId={pig.tokenId} />
                   </div>
                   <div className="flex flex-col flex-grow">
                     <div className="flex items-center gap-2 mb-2">
@@ -164,6 +165,7 @@ const ActivePiggies = ({
                         alt="name"
                         className="w-5 h-5"
                       />
+
                       <h3 className="text-base md:text-xl font-bold text-gray-800 leading-none">
                         {pig.name || `Piggy #${pig.tokenId}`}
                       </h3>
@@ -199,13 +201,13 @@ const ActivePiggies = ({
                 </div>
                 <div className="flex flex-col gap-2 flex-shrink-0 relative z-10">
                   <button
-                    className="relative w-24 h-10 cursor-pointer md:w-32 md:h-12 font-Pixel bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base hover:opacity-80 transition-opacity"
+                    className="relative w-24 h-10 cursor-pointer hover:scale-110  md:w-32 md:h-12 font-Pixel bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base hover:opacity-80 transition-opacity"
                     style={{ backgroundImage: "url(/add_to_piggy.svg)" }}
                     onClick={() => pigIn(pig.pledgeAmount, pig.tokenId)}
                   >
                     Pig In
                   </button>
-                  {/* FIX: Replaced the nested button with the actual functional component */}
+
                   <BreakPiggyButton
                     tokenId={pig.tokenId}
                     onStatusChange={onStatusChange}
@@ -224,8 +226,6 @@ const ActivePiggies = ({
     </div>
   );
 };
-
-// --- MAIN APP COMPONENT ---
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -375,7 +375,6 @@ export default function App() {
   };
 
   useEffect(() => {
-    // A successful transaction will change the 'status' state, triggering this refetch
     fetchPiggyData();
   }, [activeTab, account.address, config, status]);
 
@@ -384,14 +383,14 @@ export default function App() {
       <div className="flex flex-col items-center justify-center min-h-screen p-8 mt-25">
         <div className="flex flex-col gap-8 bg-[#F7F7F7] rounded-3xl px-8 md:px-16 py-12 w-full max-w-5xl">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-[#F8A4B6] mb-2">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-[#F8A4B6] mb-2 font-Pixel">
               My Farm
             </h1>
           </div>
           <div className="flex justify-center gap-4 border-b border-gray-300">
             <button
               onClick={() => setActiveTab("active")}
-              className={`py-2 px-4 font-bold ${
+              className={`py-2 px-4 font-bold cursor-pointer ${
                 activeTab === "active"
                   ? "text-pink-500 border-b-2 border-pink-500"
                   : "text-gray-500"
@@ -401,7 +400,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveTab("idle")}
-              className={`py-2 px-4 font-bold ${
+              className={`py-2 px-4 font-bold cursor-pointer ${
                 activeTab === "idle"
                   ? "text-pink-500 border-b-2 border-pink-500"
                   : "text-gray-500"
@@ -429,22 +428,33 @@ export default function App() {
                     className="bg-white rounded-lg p-6 shadow-md flex flex-col items-center gap-7"
                     key={piggy.tokenId}
                   >
-                    <div className="w-44 h-44 flex items-center justify-center">
-                      <div className="relative">
+                    <div className="w-44 h-44 flex items-center justify-center bg-green-600">
+                      <div className="relative z-10">
                         <img
                           src={getFrameSvg(piggy.tokenType)}
                           alt="piggy frame"
                           className="w-full h-full object-contain"
                         />
-                        <img
+
+                        <div
                           onClick={() => {
                             setIsDialogActive(true);
                             setSelectedTokenId(piggy.tokenId);
                           }}
-                          src="/piggy_activation_button.svg"
-                          alt="Activate"
-                          className="absolute w-39 h-39 top-23 left-[8px] hover:top-20 transition-all cursor-pointer"
-                        />
+                          className="absolute w-39 h-39 top-32 left-[8px] hover:top-28 transition-all cursor-pointer "
+                        >
+                          <img
+                            src="/piggy_activation_button.svg"
+                            alt="Activate"
+                            className=""
+                          />
+                          <h1 className=" font-Pixel capitalize  text-blue-100 absolute left-12 top-5 ">
+                            TURN ON
+                          </h1>
+                        </div>
+                        <div className="absolute bg-red-600 w-full top-3 object-cover -z-10 ">
+                          <PiggyImage tokenId={piggy.tokenId} />
+                        </div>
                       </div>
                     </div>
                     <div className="text-center">

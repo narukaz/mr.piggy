@@ -34,7 +34,7 @@ const JoinRaceButton = ({ onStatusChange, onSuccess }) => {
   const { data: hash, isPending, writeContract } = useWriteContract();
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timer;
     if (isSuccess) {
       onStatusChange({
@@ -92,7 +92,7 @@ const PigInRaceButton = ({
   const { data: hash, isPending, writeContract } = useWriteContract();
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timer;
     if (isSuccess) {
       onStatusChange({

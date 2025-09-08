@@ -10,8 +10,8 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { injected } from "@wagmi/connectors";
 
 const sonicTestnet = {
-  id: 14601,
-  name: "Sonic Testnet",
+  id: 146,
+  name: "Sonic Mainnet",
   nativeCurrency: {
     name: "Sonic",
     symbol: "S",
@@ -19,13 +19,13 @@ const sonicTestnet = {
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc.testnet.soniclabs.com/"],
+      http: ["https://rpc.soniclabs.com/"],
     },
   },
   blockExplorers: {
     default: {
-      name: "Sonic Testnet Explorer",
-      url: "https://testnet.soniclabs.com/",
+      name: "Sonic Mainnet Explorer",
+      url: "https://explorer.soniclabs.com/",
     },
   },
   testnet: true,

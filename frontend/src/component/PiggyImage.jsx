@@ -44,6 +44,7 @@ function PiggyImage({ tokenId }) {
     fetchMetadata();
   }, [tokenUri]);
 
+  console.log(imageUrl);
   if (isLoading) {
     return (
       <div

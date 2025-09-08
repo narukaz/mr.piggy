@@ -86,7 +86,6 @@ function PiggyCard({
           className="absolute inset-0 top-6 right-10 w-full h-full object-contain z-10"
         />
       </div>
-
       <h2 className="text-2xl font-bold text-gray-800 font-['Pixelify_Sans']">
         {name}
       </h2>

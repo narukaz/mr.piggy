@@ -19,7 +19,7 @@ function Header() {
       <div
         className={`absolute  ${
           isConnected
-            ? "right-13 top-[33px] bg-[#1A1B1F] px-14"
+            ? "right-11 top-[33px] bg-[#1A1B1F] px-14"
             : "right-13 top-[33px] bg-[#1A1B1F] px-14"
         } py-[33.5px]`}
       ></div>

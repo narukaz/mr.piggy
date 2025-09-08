@@ -108,7 +108,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
 
     function _baseURI() internal pure override returns (string memory) {
         return
-            "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeib5pbzc3x25f5qnk7rlfwlcmcnbt3wdpnmt52mvlnbc7qvzbwpwxy/";
+            "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeichtrzadvg5w4fp4eotud7cdmxqqczawknp4ckeyj53wjiyuggndy/";
     }
 
     struct Idle {
@@ -549,7 +549,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
     function create_race() public payable {
         require(msg.sender == owner, "CreateRace: not the owner");
         require(
-            msg.value >= 5 ether,
+            msg.value >= 2 ether,
             "CreateRace: not enough funds to start the race"
         );
 
@@ -678,7 +678,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         uint256 currentTokenId = nextTokenId;
 
         _mint(msg.sender, currentTokenId);
-        _setTokenURI(currentTokenId, "1.png");
+        _setTokenURI(currentTokenId, "5.json");
         piggyHealthType[currentTokenId] = 10;
         nextTokenId++;
         indexOfracingNft[currentTokenId] = races[races.length - 1]

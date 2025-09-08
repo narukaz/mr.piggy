@@ -11,8 +11,6 @@ import { formatEther, parseEther } from "viem";
 import { readContract } from "wagmi/actions";
 import PiggyImage from "./PiggyImage";
 
-// --- Reusable Child Components ---
-
 const StatItem = ({ icon, label, value }) => (
   <div className="flex items-center gap-2">
     <img src={icon} alt={label} className="w-5 h-5 md:w-6 md:h-6" />
@@ -30,7 +28,7 @@ const JoinRaceButton = ({ onStatusChange, onSuccess }) => {
     address: contract.contract_address,
     abi: master_abi,
     functionName: "JoinRace",
-    value: parseEther("0.5"), // Entry fee
+    value: parseEther("0.5"),
   });
 
   const { data: hash, isPending, writeContract } = useWriteContract();
@@ -81,6 +79,7 @@ const PigInRaceButton = ({
   pledgeAmount,
   onStatusChange,
   onSuccess,
+  isRaceActive,
 }) => {
   const { data: simulation, error: simulationError } = useSimulateContract({
     address: contract.contract_address,
@@ -123,8 +122,10 @@ const PigInRaceButton = ({
   return (
     <button
       onClick={handlePigIn}
-      disabled={!simulation?.request || isPending || isLoading}
-      className="relative hover:scale-110 w-24 h-10 md:w-32 md:h-12 cursor-pointer font-Pixel bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base transition-opacity disabled:opacity-50"
+      disabled={isRaceActive}
+      className={`relative hover:scale-110 w-24 h-10 md:w-32 md:h-12 cursor-pointer font-Pixel bg-contain bg-center bg-no-repeat flex items-center justify-center text-white font-bold text-sm md:text-base transition-opacity disabled:opacity-50 ${
+        isRaceActive ? "cursor-not-allowed" : "cursor-pointer"
+      }`}
       style={{ backgroundImage: "url(/add_to_piggy.svg)" }}
     >
       {isPending ? "Confirm..." : isLoading ? "Depositing..." : "Pig In"}
@@ -191,6 +192,11 @@ function Race() {
 
   const account = useAccount();
   const config = useConfig();
+
+  const isRaceActive =
+    raceDetails &&
+    !raceDetails.finished &&
+    Date.now() >= raceDetails.startTime * 1000;
 
   const fetchRaceData = React.useCallback(async () => {
     setIsLoading(true);
@@ -339,7 +345,7 @@ function Race() {
               >
                 <div
                   className="absolute inset-0 bg-no-repeat bg-contain bg-center z-0"
-                  style={{ backgroundImage: `url(/simple_frame.svg)` }}
+                  style={{ backgroundImage: `url(/diamond_frame.svg)` }}
                 />
                 <div className="flex items-center justify-between gap-4 md:gap-6 relative z-10 w-full px-2 md:px-4">
                   <div className="flex items-center gap-4 md:gap-6 flex-grow">
@@ -394,6 +400,7 @@ function Race() {
                       pledgeAmount={pig.pledgeAmount}
                       onStatusChange={setStatus}
                       onSuccess={fetchRaceData}
+                      isRaceActive={!isRaceActive}
                     />
                     <QuitRaceButton
                       tokenId={pig.tokenId}

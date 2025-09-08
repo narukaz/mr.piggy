@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.35 15.35">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #497f5b;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-1" d="M11.51,9.97h-.77v.77h-.77v.77h-1.53v.77h1.53v.77h.77v.77h.77v.77h.77v.77h2.31v-.77h.77v-2.3h-.77v-.77h-.77v-.77h-.77v-.77h-.77v-1.54h-.77v1.54ZM12.28,11.51h.77v.77h.77v.77h.77v.77h-.77v-.77h-.77v-.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M12.28,4.6h.77v3.84h-.77v-3.84Z"/>
+      <path class="cls-1" d="M11.51,3.07h.77v1.54h-.77v-1.54Z"/>
+      <path class="cls-1" d="M10.74,2.3h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M9.97,1.54h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M8.44.77h1.53v.77h-1.53v-.77Z"/>
+      <path class="cls-1" d="M2.31,7.67h.77v.77h.77v.77h.77v.77h1.53v-.77h.77v-.77h.77v-.77h.77v-.77h.77v-.77h.77v-.77h.77v-.77h-.77v-.77h-.77v.77h-.77v.77h-.77v.77h-.77v.77h-.77v.77h-1.53v-.77h-.77v-.77h-.77v.77h-.77v.77Z"/>
+      <path class="cls-1" d="M4.61,12.28h3.84v.77h-3.84v-.77Z"/>
+      <path class="cls-1" d="M4.61,0h3.84v.77h-3.84v-.77Z"/>
+      <path class="cls-1" d="M3.07,11.51h1.54v.77h-1.54v-.77Z"/>
+      <path class="cls-1" d="M3.07.77h1.54v.77h-1.54v-.77Z"/>
+      <path class="cls-1" d="M2.31,10.74h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M2.31,1.54h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M1.54,9.97h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M1.54,2.3h.77v.77h-.77v-.77Z"/>
+      <path class="cls-1" d="M.77,8.44h.77v1.54h-.77v-1.54Z"/>
+      <path class="cls-1" d="M.77,3.07h.77v1.54h-.77v-1.54Z"/>
+      <path class="cls-1" d="M0,4.6h.77v3.84h-.77v-3.84Z"/>
+    </g>
+  </g>
+</svg>

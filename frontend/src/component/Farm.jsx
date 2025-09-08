@@ -122,7 +122,7 @@ const ActivePiggies = ({
   );
 
   const getFrameSvg = (health) => {
-    if (health >= 9) return "/diamon_frame.svg";
+    if (health >= 9) return "/diamond_frame.svg";
     if (health >= 7) return "/gold_frame.svg";
     if (health >= 6) return "/silver_frame.svg";
     if (health >= 5) return "/bronze_frame.svg";
@@ -246,7 +246,7 @@ export default function App() {
   const [selectedTokenId, setSelectedTokenId] = useState(null);
 
   const getFrameSvg = (type) => {
-    if (type >= 9) return "/diamon_inactive_frame.svg";
+    if (type >= 9) return "/diamond_inactive_frame.svg";
     if (type >= 7) return "/gold_inactive_frame.svg";
     if (type >= 6) return "/silver_inactive_frame.svg";
     if (type >= 5) return "/bronze_inactive_frame.svg";
@@ -428,7 +428,7 @@ export default function App() {
                     className="bg-white rounded-lg p-6 shadow-md flex flex-col items-center gap-7"
                     key={piggy.tokenId}
                   >
-                    <div className="w-44 h-44 flex items-center justify-center bg-green-600">
+                    <div className="w-44 h-44 flex items-center justify-center ">
                       <div className="relative z-10">
                         <img
                           src={getFrameSvg(piggy.tokenType)}
@@ -452,7 +452,7 @@ export default function App() {
                             TURN ON
                           </h1>
                         </div>
-                        <div className="absolute bg-red-600 w-full top-3 object-cover -z-10 ">
+                        <div className="absolute w-full -top-9 object-cover scale-90 -z-10 ">
                           <PiggyImage tokenId={piggy.tokenId} />
                         </div>
                       </div>

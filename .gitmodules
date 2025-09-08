@@ -1,6 +1,90 @@
-[submodule "contract/lib/forge-std"]
-	path = contract/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
-[submodule "contract/lib/openzeppelin-contracts"]
-	path = contract/lib/openzeppelin-contracts
-	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+# Mr. Piggy 🐷
+
+A Gamified Savings dApp on the Sonic Blockchain that brings the timeless joy of a piggy bank into the Web3 era.
+
+## 🚀 Live Demo & Source Code
+
+-   [**View Live Demo on Vercel**](https://mr-piggy.vercel.app/)
+-   [**Explore the Code on GitHub**](https://github.com/narukaz/mr.piggy)
+
+---
+
+## 📖 Table of Contents
+
+-   [About The Project](#-about-the-project)
+-   [Key Features](#-key-features)
+-   [Tech Stack](#-tech-stack)
+-   [App Navigation](#-app-navigation)
+-   [Getting Started](#-getting-started)
+
+---
+
+## 🐷 About The Project
+
+**Mr. Piggy** is designed to be a fun and engaging entry point into the world of decentralized finance (DeFi). The core vision is to **onboard new users to Web3** by using a concept everyone understands: the piggy bank.
+
+Instead of a ceramic pig, each user gets their own **digital Piggy as a unique NFT**. Users can then save cryptocurrency inside their NFT, set savings goals, and watch their balance grow. This simple act teaches fundamental blockchain concepts—like the difference between Non-Fungible Tokens (the Piggy) and Fungible Tokens (the savings inside)—in an intuitive way.
+
+Compared to a traditional piggy bank, Mr. Piggy offers several key advantages:
+-   **Earn Bonuses:** Piggies can earn bonus returns upon reaching a savings goal.
+-   **Upgradable Tiers:** Different tiers of Piggies (Bronze, Silver, Gold, etc.) offer better "health" and higher bonuses.
+-   **Gamified Competition:** Users can enter their Piggies into community "Races" to compete for a prize pool, turning saving into a social and rewarding experience.
+
+
+
+---
+
+## ✨ Key Features
+
+-   **Market:** Browse and mint different tiers of Piggy NFTs, from the free Basic Piggy to the resilient Diamond Piggy.
+-   **Farm:** Manage all your owned Piggies. Activate idle Piggies by setting a savings goal and a recurring pledge amount.
+-   **Gamified Saving:** Make recurring deposits ("Pig In") to your active Piggies to maintain their health and work towards your goal.
+-   **Community Races:** Join time-based savings competitions against other players to win rewards from a community prize pool.
+
+---
+
+## 🛠️ Tech Stack
+
+This project is built with a modern, efficient tech stack:
+
+-   **Frontend:** **React.js** (with Vite)
+-   **Styling:** **Tailwind CSS**
+-   **Blockchain Interaction:** **Wagmi** & **Viem** for hooks and utilities.
+-   **Smart Contracts:** **Solidity** **foundry**
+-   **Deployment:** **Vercel**
+
+---
+
+## 🗺️ App Navigation
+
+The dApp is organized into four main sections:
+
+-   `'/'` **(Home):** The main landing page. This section explains the rules of the game, the benefits of different Piggy tiers, and the project's vision.
+-   `'/market'` **(Market):** The marketplace where you can browse all available Piggy types and mint a new one to add to your collection.
+-   `'/farm'` **(My Farm):** Your personal dashboard. Here you can view your collection of Piggies, separated into "Active" (currently saving towards a goal) and "Idle" (waiting to be activated).
+-   `'/race'` **(Race):** The community racing arena. This page displays details about the current race, allows you to join, and shows any of your Piggies that are currently competing.
+
+---
+
+## ⚙️ Getting Started
+
+To run this project locally, follow these steps:
+
+1.  **Clone the repository:**
+    ```sh
+    git clone YOUR_GITHUB_LINK_HERE
+    cd mr-piggy
+    ```
+2.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
+4.  **Run the development server:**
+    ```sh
+    npm run dev
+    ```
+
+
+
+
+

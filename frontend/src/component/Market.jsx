@@ -17,6 +17,7 @@ function PiggyCard({
   bullets,
   function_name,
   piggy_price,
+  piggy_image,
 }) {
   const navigate = useNavigate();
 
@@ -75,15 +76,14 @@ function PiggyCard({
     <div className="flex flex-col gap-4 px-6 py-6 bg-white min-w-[250px] rounded-2xl text-black items-center shadow-lg border-2 border-gray-200">
       <div className="relative w-32 h-32 mb-4">
         <img
-          src="https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeiavqtowxksrgfyf7btcydeh2fhbvm3h3qw2ueecucrzbebzeb5h6a/2.jpg"
-          alt={`${name} Placeholder`}
+          src={piggy_image}
           className=" w-auto h-auto object-cover rounded-full scale-75"
         />
 
         <img
           src={frame}
           alt={`${name} frame`}
-          className="absolute inset-0 w-full h-full object-contain z-10"
+          className="absolute inset-0 top-6 right-10 w-full h-full object-contain z-10"
         />
       </div>
 
@@ -91,7 +91,7 @@ function PiggyCard({
         {name}
       </h2>
       <p className="font-semibold text-pink-500">
-        {piggy_price === "0" ? "Free" : `${piggy_price} ETH`}
+        {piggy_price === "0" ? "Free" : `${piggy_price} SONIC`}
       </p>
       <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-normal self-start pl-4">
         {bullets.map((bullet, index) => (
@@ -135,6 +135,8 @@ function Market() {
         "Tracks your feeding streaks.",
         "3% bonus on goal completion.",
       ],
+      image:
+        "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/1.svg",
     },
     {
       name: "Bronze Piggy",
@@ -146,6 +148,8 @@ function Market() {
         "Slightly increased health.",
         "5% bonus on goal completion.",
       ],
+      image:
+        "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/2.svg",
     },
     {
       name: "Silver Piggy",
@@ -157,6 +161,8 @@ function Market() {
         "Substantially increased health.",
         "6% bonus on goal completion.",
       ],
+      image:
+        "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/3.svg",
     },
     {
       name: "Gold Piggy",
@@ -168,6 +174,8 @@ function Market() {
         "Impressive health reserve.",
         "7% bonus on goal completion.",
       ],
+      image:
+        "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/4.svg",
     },
     {
       name: "Diamond Piggy",
@@ -179,6 +187,8 @@ function Market() {
         "Unmatched health and resilience.",
         "9% bonus on goal completion.",
       ],
+      image:
+        "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/5.svg",
     },
   ];
 
@@ -220,6 +230,7 @@ function Market() {
                 bullets={piggy.bullets}
                 function_name={piggy.functionName}
                 piggy_price={piggy.price}
+                piggy_image={piggy.image}
               />
             ))}
           </div>

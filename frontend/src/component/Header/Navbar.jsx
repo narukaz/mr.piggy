@@ -1,9 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
-    <>
+    <div className="">
+      <div
+        className="absolute w-[150px] h-auto left-20 top-8 bg-black  flex justify-center cursor-pointer hover:scale-110 transition-all "
+        onClick={() => navigate("/")}
+      >
+        <div className="absolute  left-4 top-2 px-[60px] py-[25px] bg-black"></div>
+        <img
+          src="/Home_icon.svg"
+          className="absolute z-10 bg-black px-2 py-2 w-[75px]"
+        />
+      </div>
       <div className="flex justify-between items-center gap-6 text-white text-base md:text-xl bg-transparent py-2 px-6 max-w-4xl absolute left-1/2 top-9 -translate-x-1/2 rounded-4xl shadow-md z-20">
         <Link
           to="market"
@@ -31,7 +42,7 @@ function Navbar() {
         className="absolute max-w-[450px] left-1/2 top-8 -translate-x-1/2  "
         alt="search bar bg"
       />
-    </>
+    </div>
   );
 }
 

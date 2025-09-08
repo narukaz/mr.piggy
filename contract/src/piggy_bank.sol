@@ -43,13 +43,14 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         uint256 currentStreak;
         bool initialized;
     }
+
     mapping(address => StreakData) public UserStreak;
 
     event PiggyBroken(
         uint256 indexed tokenId,
         address indexed owner,
         uint256 savedAmount,
-        uint256 bonusRate, // in basis points (e.g., 300 = 3%)
+        uint256 bonusRate,
         uint256 payout
     );
 
@@ -63,8 +64,6 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         uint256 nextExpectedPaymentTimeRange;
         uint256 goalAmount;
         uint256 piggyHealth;
-
-        // bool active;
     }
 
     mapping(uint256 => uint256) public vault;
@@ -117,6 +116,84 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         uint256 tokenType;
     }
 
+    function user_idle_tokens() public view returns (Idle[] memory) {
+        uint256 numberOfTokens = balanceOf(msg.sender);
+        if (numberOfTokens == 0) {
+            return new Idle[](0);
+        }
+        uint256 idleCount = 0;
+        uint256[] memory idleTokenIds = new uint256[](numberOfTokens);
+        for (uint256 i = 0; i < numberOfTokens; i++) {
+            uint256 tokenId = tokenOfOwnerByIndex(msg.sender, i);
+
+            if (!activePiggy[tokenId]) {
+                idleTokenIds[idleCount] = tokenId;
+                idleCount++;
+            }
+        }
+        if (idleCount == 0) {
+            return new Idle[](0);
+        }
+
+        Idle[] memory idleTokens = new Idle[](idleCount);
+        for (uint256 i = 0; i < idleCount; i++) {
+            uint256 currentTokenId = idleTokenIds[i];
+            idleTokens[i] = Idle({
+                tokenId: currentTokenId,
+                tokenType: piggyHealthType[currentTokenId]
+            });
+        }
+
+        return idleTokens;
+    }
+
+    function user_active_tokens()
+        public
+        view
+        returns (
+            uint256[] memory activeTokenIds,
+            PiggyData[] memory activePiggiesData
+        )
+    {
+        uint256 numberOfTokens = balanceOf(msg.sender);
+
+        if (numberOfTokens == 0) {
+            return (new uint256[](0), new PiggyData[](0));
+        }
+
+        uint256 activeCount = 0;
+
+        uint256[] memory allTokenIds = new uint256[](numberOfTokens);
+        for (uint256 i = 0; i < numberOfTokens; i++) {
+            uint256 tokenId = tokenOfOwnerByIndex(msg.sender, i);
+            allTokenIds[i] = tokenId;
+
+            if (activePiggy[tokenId] && !piggyInRace[tokenId]) {
+                activeCount++;
+            }
+        }
+
+        if (activeCount == 0) {
+            return (new uint256[](0), new PiggyData[](0));
+        }
+
+        activeTokenIds = new uint256[](activeCount);
+        activePiggiesData = new PiggyData[](activeCount);
+        uint256 currentIndex = 0;
+
+        for (uint256 i = 0; i < numberOfTokens; i++) {
+            uint256 currentTokenId = allTokenIds[i];
+
+            if (activePiggy[currentTokenId] && !piggyInRace[currentTokenId]) {
+                activeTokenIds[currentIndex] = currentTokenId;
+                activePiggiesData[currentIndex] = piggies[currentTokenId];
+                currentIndex++;
+            }
+        }
+
+        return (activeTokenIds, activePiggiesData);
+    }
+
     function mint_bronze_badge() public {
         require(!bronze_badge[msg.sender], "user already have a badge");
         uint256 streak = UserStreak[msg.sender].bestStreak;
@@ -147,6 +224,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
 
     function mintBasicPiggy() public {
         _mint(msg.sender, nextTokenId);
+        piggyHealthType[nextTokenId] = NORMAL_HEALTH;
         _setTokenURI(nextTokenId, "1.json");
         nextTokenId++;
     }
@@ -252,6 +330,74 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         );
     }
 
+    // function depositToPiggy(uint256 _tokenId) external payable {
+    //     if (piggyInRace[_tokenId]) {
+    //         require(races.length > 0, "DepositToPiggy: no race available");
+    //         Race storage activeRace = races[races.length - 1];
+    //         require(!activeRace.finished, "DepositToPiggy: race is over");
+    //         require(
+    //             block.timestamp >= activeRace.startTime,
+    //             "DepositToPiggy: race has not started"
+    //         );
+    //     }
+
+    //     PiggyData storage p = piggies[_tokenId];
+    //     require(
+    //         p.piggyHealth > 0,
+    //         "DepositToPiggy: piggy with 0 health, only can be burned"
+    //     );
+    //     require(activePiggy[_tokenId], "DepositToPiggy: piggy not active");
+    //     require(
+    //         msg.value == p.pledgeAmount,
+    //         "DepositToPiggy: must send exact pledge amount"
+    //     );
+
+    //     vault[_tokenId] += msg.value; // Store the deposit in a separate vault
+
+    //     if (block.timestamp > p.nextExpectedPaymentTimeRange) {
+    //         p.piggyHealth -= 1;
+    //     }
+
+    //     bool onTime = block.timestamp <= p.nextExpectedPaymentTimeRange;
+    //     uint256 cycleIndex = (block.timestamp - p.startTime) / p.cycle;
+    //     p.totalSaved += msg.value;
+    //     p.depositCount += 1;
+    //     p.lastDeposit = block.timestamp;
+    //     p.nextExpectedPaymentTimeRange = block.timestamp + p.cycle;
+
+    //     address _owner = ownerOf(_tokenId);
+    //     StreakData storage s = UserStreak[_owner];
+    //     if (piggyLastCountedCycle[_tokenId] != cycleIndex) {
+    //         if (!s.initialized) {
+    //             s.initialized = true;
+    //             s.currentStreak = onTime ? 1 : 1;
+    //             s.bestStreak = s.currentStreak;
+    //             if (s.bestStreak > 0) {
+    //                 emit BestStreakUpdated(_owner, s.bestStreak);
+    //             }
+    //         } else {
+    //             if (onTime) {
+    //                 s.currentStreak += 1;
+    //             } else {
+    //                 s.currentStreak = 1;
+    //             }
+    //             if (s.currentStreak > s.bestStreak) {
+    //                 s.bestStreak = s.currentStreak;
+    //                 emit BestStreakUpdated(_owner, s.bestStreak);
+    //             }
+    //         }
+    //         piggyLastCountedCycle[_tokenId] = cycleIndex;
+    //     }
+
+    //     emit DepositMade(
+    //         _tokenId,
+    //         msg.sender,
+    //         msg.value,
+    //         p.totalSaved,
+    //         p.nextExpectedPaymentTimeRange
+    //     );
+    // }
+
     function depositToPiggy(uint256 _tokenId) external payable {
         if (piggyInRace[_tokenId]) {
             require(races.length > 0, "DepositToPiggy: no race available");
@@ -264,6 +410,14 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         }
 
         PiggyData storage p = piggies[_tokenId];
+
+        uint256 cycleIndex = (block.timestamp - p.startTime) / p.cycle;
+
+        require(
+            piggyLastCountedCycle[_tokenId] != cycleIndex,
+            "Deposit already made for this cycle"
+        );
+
         require(
             p.piggyHealth > 0,
             "DepositToPiggy: piggy with 0 health, only can be burned"
@@ -274,14 +428,13 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
             "DepositToPiggy: must send exact pledge amount"
         );
 
-        vault[_tokenId] += msg.value; // Store the deposit in a separate vault
+        vault[_tokenId] += msg.value;
 
         if (block.timestamp > p.nextExpectedPaymentTimeRange) {
             p.piggyHealth -= 1;
         }
 
         bool onTime = block.timestamp <= p.nextExpectedPaymentTimeRange;
-        uint256 cycleIndex = (block.timestamp - p.startTime) / p.cycle;
         p.totalSaved += msg.value;
         p.depositCount += 1;
         p.lastDeposit = block.timestamp;
@@ -289,27 +442,27 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
 
         address _owner = ownerOf(_tokenId);
         StreakData storage s = UserStreak[_owner];
-        if (piggyLastCountedCycle[_tokenId] != cycleIndex) {
-            if (!s.initialized) {
-                s.initialized = true;
-                s.currentStreak = onTime ? 1 : 1;
-                s.bestStreak = s.currentStreak;
-                if (s.bestStreak > 0) {
-                    emit BestStreakUpdated(_owner, s.bestStreak);
-                }
-            } else {
-                if (onTime) {
-                    s.currentStreak += 1;
-                } else {
-                    s.currentStreak = 1;
-                }
-                if (s.currentStreak > s.bestStreak) {
-                    s.bestStreak = s.currentStreak;
-                    emit BestStreakUpdated(_owner, s.bestStreak);
-                }
+
+        if (!s.initialized) {
+            s.initialized = true;
+            s.currentStreak = onTime ? 1 : 1;
+            s.bestStreak = s.currentStreak;
+            if (s.bestStreak > 0) {
+                emit BestStreakUpdated(_owner, s.bestStreak);
             }
-            piggyLastCountedCycle[_tokenId] = cycleIndex;
+        } else {
+            if (onTime) {
+                s.currentStreak += 1;
+            } else {
+                s.currentStreak = 1;
+            }
+            if (s.currentStreak > s.bestStreak) {
+                s.bestStreak = s.currentStreak;
+                emit BestStreakUpdated(_owner, s.bestStreak);
+            }
         }
+
+        piggyLastCountedCycle[_tokenId] = cycleIndex;
 
         emit DepositMade(
             _tokenId,
@@ -345,7 +498,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         uint256 payout = saved;
 
         if (saved >= p.goalAmount) {
-            uint256 bonusRate = p.piggyHealth * 100; // health → basis points (e.g., 3 → 300 = 3%)
+            uint256 bonusRate = p.piggyHealth * 100;
             uint256 bonus = (saved * bonusRate) / 10000;
             payout += bonus;
         }
@@ -387,6 +540,11 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
     event RaceFinished(uint256 time, address indexed _owner);
 
     mapping(uint256 => bool) public piggyInRace;
+    function getRace(uint256 i) public view returns (Race memory) {
+        require(i < races.length, "Race index out of bounds");
+
+        return races[i];
+    }
 
     function create_race() public payable {
         require(msg.sender == owner, "CreateRace: not the owner");
@@ -415,92 +573,6 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
     function total_races() public view returns (uint256) {
         return races.length;
     }
-    // function EndRace() public {
-    //     require(msg.sender == owner, "EndRace: not the owner");
-    //     require(races.length > 0, "EndRace: no ongoing race ");
-    //     Race storage activeRace = races[races.length - 1];
-    //     require(!activeRace.finished, "EndRace: race already finished");
-    //     require(
-    //         block.timestamp > activeRace.endTime,
-    //         "EndRace: Time remaining to finish the race"
-    //     );
-
-    //     uint256[] memory participants = activeRace.participants;
-    //     uint256 highTierCount = 0;
-    //     uint256 midTierCount = 0;
-    //     uint256 lowTierCount = 0;
-
-    //     for (uint256 i = 0; i < participants.length; i++) {
-    //         uint256 tokenId = participants[i];
-    //         PiggyData storage p = piggies[tokenId];
-
-    //         if (p.piggyHealth >= 7 && p.piggyHealth <= 10) {
-    //             highTierCount++;
-    //         } else if (p.piggyHealth >= 5 && p.piggyHealth < 7) {
-    //             midTierCount++;
-    //         } else if (p.piggyHealth > 0 && p.piggyHealth < 5) {
-    //             lowTierCount++;
-    //         }
-    //     }
-
-    //     uint256 totalRewardPool = activeRace.reward;
-    //     uint256 highTierReward = 0;
-    //     uint256 midTierReward = 0;
-    //     uint256 lowTierReward = 0;
-
-    //     if (highTierCount > 0) {
-    //         highTierReward = (totalRewardPool * 60) / 100;
-    //     }
-    //     if (midTierCount > 0) {
-    //         midTierReward = (totalRewardPool * 30) / 100;
-    //     }
-    //     if (lowTierCount > 0) {
-    //         lowTierReward = (totalRewardPool * 10) / 100;
-    //     }
-
-    //     for (uint256 i = 0; i < participants.length; i++) {
-    //         uint256 tokenId = participants[i];
-    //         PiggyData storage p = piggies[tokenId];
-    //         address user = ownerOf(tokenId);
-    //         uint256 rewardAmount = 0;
-
-    //         if (
-    //             p.piggyHealth >= 7 && p.piggyHealth <= 10 && highTierCount > 0
-    //         ) {
-    //             rewardAmount = (highTierReward / highTierCount);
-    //         } else if (
-    //             p.piggyHealth >= 5 && p.piggyHealth < 7 && midTierCount > 0
-    //         ) {
-    //             rewardAmount = (midTierReward / midTierCount);
-    //         } else if (
-    //             p.piggyHealth > 0 && p.piggyHealth < 5 && lowTierCount > 0
-    //         ) {
-    //             rewardAmount = (lowTierReward / lowTierCount);
-    //         } else if (p.piggyHealth == 0) {
-    //             rewardAmount = p.totalSaved;
-    //         }
-
-    //         uint256 finalAmount = rewardAmount + p.totalSaved;
-
-    //         if (finalAmount > 0) {
-    //             (bool success, ) = user.call{value: finalAmount}("");
-    //             require(success, "EndRace: transfer failed");
-    //         }
-
-    //         delete activePiggy[tokenId];
-    //         delete piggyLastCountedCycle[tokenId];
-    //         delete vault[tokenId];
-    //         delete piggyHealthType[tokenId];
-    //         delete piggyInRace[tokenId];
-    //         delete piggies[tokenId];
-
-    //         _burn(tokenId);
-    //     }
-
-    //     activeRace.finished = true;
-
-    //     emit RaceFinished(block.timestamp, msg.sender);
-    // }
 
     function EndRace() public {
         require(msg.sender == owner, "EndRace: not the owner");
@@ -605,7 +677,6 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
 
         uint256 currentTokenId = nextTokenId;
 
-        // Mint a Normal Piggy for the race
         _mint(msg.sender, currentTokenId);
         _setTokenURI(currentTokenId, "1.png");
         piggyHealthType[currentTokenId] = 10;
@@ -614,6 +685,9 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
             .participants
             .length;
         races[races.length - 1].participants.push(currentTokenId);
+        races[races.length - 1].reward =
+            races[races.length - 1].reward +
+            0.5 ether;
 
         piggyInRace[currentTokenId] = true;
 
@@ -631,48 +705,47 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
 
     function currentRaceReward() public pure returns (uint256) {}
 
-    // function quit_race(uint256 _tokenId) public {
-    //     address owner_of_token = ownerOf(_tokenId);
-    //     require(msg.sender == owner_of_token, "exitRace: not token owner");
-    //     require(piggyInRace[_tokenId], "exitRace: not in the race");
+    function getUserRacingPiggies(
+        address _owner
+    )
+        public
+        view
+        returns (
+            uint256[] memory racingTokenIds,
+            PiggyData[] memory racingPiggiesData
+        )
+    {
+        uint256 totalOwned = balanceOf(_owner);
+        if (totalOwned == 0) {
+            return (new uint256[](0), new PiggyData[](0));
+        }
 
-    //     PiggyData storage p = piggies[_tokenId];
-    //     uint256 saved = p.totalSaved;
-    //     uint256 refund = 0;
+        uint256[] memory tempTokenIds = new uint256[](totalOwned);
+        uint256 racingCount = 0;
+        for (uint256 i = 0; i < totalOwned; i++) {
+            uint256 tokenId = tokenOfOwnerByIndex(_owner, i);
 
-    //     Race storage activeRace = races[races.length - 1];
+            if (piggyInRace[tokenId]) {
+                tempTokenIds[racingCount] = tokenId;
+                racingCount++;
+            }
+        }
 
-    //     if (saved > 0) {
-    //         uint256 penalty = (saved * 2) / 100;
-    //         refund = saved - penalty;
-    //         activeRace.reward += penalty;
-    //     }
+        if (racingCount == 0) {
+            return (new uint256[](0), new PiggyData[](0));
+        }
 
-    //     uint256 participants_len = activeRace.participants.length;
-    //     uint256 indexToRemove = indexOfracingNft[_tokenId];
-    //     uint256 lastParticipantTokenId = activeRace.participants[
-    //         participants_len - 1
-    //     ];
-    //     activeRace.participants[indexToRemove] = lastParticipantTokenId;
-    //     indexOfracingNft[lastParticipantTokenId] = indexToRemove;
-    //     activeRace.participants.pop();
-    //     delete indexOfracingNft[_tokenId];
-    //     delete activePiggy[_tokenId];
-    //     delete piggyLastCountedCycle[_tokenId];
-    //     delete vault[_tokenId];
-    //     delete piggyHealthType[_tokenId];
-    //     delete piggyInRace[_tokenId];
-    //     delete piggies[_tokenId];
+        racingTokenIds = new uint256[](racingCount);
+        racingPiggiesData = new PiggyData[](racingCount);
+        for (uint256 i = 0; i < racingCount; i++) {
+            uint256 currentTokenId = tempTokenIds[i];
+            racingTokenIds[i] = currentTokenId;
+            racingPiggiesData[i] = piggies[currentTokenId];
+        }
 
-    //     _burn(_tokenId);
+        return (racingTokenIds, racingPiggiesData);
+    }
 
-    //     if (refund > 0) {
-    //         (bool success, ) = owner_of_token.call{value: refund}("");
-    //         require(success, "exitRace: refund failed");
-    //     }
-
-    //     emit RaceExited(owner_of_token, _tokenId, refund);
-    // }
     function quit_race(uint256 _tokenId) public {
         address owner_of_token = ownerOf(_tokenId);
         require(msg.sender == owner_of_token, "exitRace: not token owner");
@@ -710,5 +783,24 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
         }
 
         emit RaceExited(owner_of_token, _tokenId, refund);
+    }
+
+    event EtherReceived(address indexed from, uint256 amount);
+    event EtherWithdrawn(address indexed to, uint256 amount);
+
+    receive() external payable {
+        emit EtherReceived(msg.sender, msg.value);
+    }
+
+    function withdraw() external {
+        require(msg.sender == owner, "Only the owner can withdraw.");
+
+        uint256 amount = address(this).balance;
+        require(amount > 0, "There is no balance to withdraw.");
+
+        (bool success, ) = owner.call{value: amount}("");
+        require(success, "Withdrawal failed.");
+
+        emit EtherWithdrawn(owner, amount);
     }
 }

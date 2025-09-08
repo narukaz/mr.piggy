@@ -1,38 +1,45 @@
 import React from "react";
 
-// Data for the piggy tiers to make rendering easier
 const piggyTiers = [
-  // FIX: Added the Basic Piggy to the grid data
   {
     name: "Basic",
     frame: "/basic_inactive_frame.svg",
     benefits: ["Health: 3", "3% Goal Bonus"],
+    image:
+      "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/1.svg",
   },
   {
     name: "Bronze",
     frame: "/bronze_inactive_frame.svg",
     benefits: ["Health: 5", "5% Goal Bonus"],
+    image:
+      "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/2.svg",
   },
   {
     name: "Silver",
     frame: "/silver_inactive_frame.svg",
     benefits: ["Health: 6", "6% Goal Bonus"],
+    image:
+      "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/3.svg",
   },
   {
     name: "Gold",
     frame: "/gold_inactive_frame.svg",
     benefits: ["Health: 7", "7% Goal Bonus"],
+    image:
+      "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/4.svg",
   },
   {
     name: "Diamond",
     frame: "/diamond_inactive_frame.svg",
     benefits: ["Health: 9", "9% Goal Bonus"],
+    image:
+      "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeih4gdpouwvk3nhkufhvlagwqmjsg55ahbvguvjzstyyfbs32f2kaa/5.svg",
   },
 ];
 
 function Home() {
   return (
-    // FIX: Changed positioning to allow for natural page scrolling
     <div className="min-h-screen flex items-center justify-center py-12 px-4 mt-52">
       <div className="w-full max-w-5xl bg-[#F7F7F7] text-[#2e2e2e] p-8 rounded-2xl shadow-lg border border-gray-200 font-['Pixelify_Sans']">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-[#F8A4B6]">
@@ -42,35 +49,29 @@ function Home() {
           Here's a quick guide to saving, earning, and racing with your piggies.
         </p>
 
-        {/* Rules Section */}
         <div className="space-y-8">
-          {/* Piggy NFTs Section */}
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-[#F8A4B6]">
               Piggy NFTs: Your Oink-Powered Advantages
             </h2>
-            {/* FIX: Removed the introductory paragraph for Basic piggy as it's now in the grid */}
+
             <p className="text-gray-700 leading-relaxed mb-6 font-sans">
               Your journey starts by acquiring a Piggy. You can get a Basic
               Piggy for free or purchase higher-tier Piggies from the Market,
               each offering better perks for your savings goals.
             </p>
 
-            {/* Piggy Tiers Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {piggyTiers.map((pig) => (
-                // FIX: Restructured into a card layout
                 <div
                   key={pig.name}
                   className="bg-gray-50 p-4 rounded-lg shadow-inner flex flex-col items-center"
                 >
-                  {/* Image container */}
                   <div className="relative w-full aspect-square mb-4">
-                    {/* Placeholder for the piggy image (bottom layer) */}
-                    <div className="absolute inset-4 bg-gray-200 rounded-full flex items-center justify-center">
-                      <img src="https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeiavqtowxksrgfyf7btcydeh2fhbvm3h3qw2ueecucrzbebzeb5h6a/2.jpg" />
+                    <div className="absolute inset-4 bg-gray-200 left-7 rounded-full flex items-center justify-center">
+                      <img src={pig.image} />
                     </div>
-                    {/* The frame image (top layer) */}
+
                     <img
                       src={pig.frame}
                       alt={`${pig.name} frame`}
@@ -101,7 +102,6 @@ function Home() {
             </p>
           </div>
 
-          {/* Streaks and Badges */}
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-2xl font-bold mb-2 text-[#F8A4B6]">
               Streaks & Badge NFTs
@@ -114,7 +114,6 @@ function Home() {
             </p>
           </div>
 
-          {/* Piggy Races */}
           <div className="bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-2xl font-bold mb-2 text-[#F8A4B6]">
               The Piggy Race

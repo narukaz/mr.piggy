@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PiggyCard from "./piggyCard"; // Ensure this path is correct
+import PiggyCard from "./piggyCard";
 
 function Market() {
   const piggies = [

@@ -8,7 +8,7 @@ import Home from "./component/Home";
 
 function App() {
   return (
-    <div className="bg-[url('/bg.jpg')] bg-center bg-cover bg-no-repeat bg-fixed min-h-screen">
+    <div className="bg-[url('/bg.jpg')] bg-center bg-cover bg-no-repeat bg-fixed min-h-screen relative">
       <Header />
       <Routes>
         <Route path="Race" element={<Race />} />

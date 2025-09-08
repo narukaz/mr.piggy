@@ -3,10 +3,12 @@ pragma solidity ^0.8.20;
 
 import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 
-contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
+contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable, ERC721Enumerable {
     address public owner;
+
     event PiggyActivated(
         uint256 indexed tokenId,
         address indexed owner,
@@ -87,15 +89,32 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
         return super.tokenURI(tokenId);
     }
 
+    function _increaseBalance(
+        address account,
+        uint128 value
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._increaseBalance(account, value);
+    }
+
     function supportsInterface(
         bytes4 interfaceId
-    ) public view override(ERC721, ERC721URIStorage) returns (bool) {
+    )
+        public
+        view
+        override(ERC721, ERC721Enumerable, ERC721URIStorage)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
     }
 
     function _baseURI() internal pure override returns (string memory) {
         return
-            "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeiavqtowxksrgfyf7btcydeh2fhbvm3h3qw2ueecucrzbebzeb5h6a/";
+            "https://cyan-realistic-swift-995.mypinata.cloud/ipfs/bafybeib5pbzc3x25f5qnk7rlfwlcmcnbt3wdpnmt52mvlnbc7qvzbwpwxy/";
+    }
+
+    struct Idle {
+        uint256 tokenId;
+        uint256 tokenType;
     }
 
     function mint_bronze_badge() public {
@@ -104,7 +123,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
         require(streak > 10, "streak should be greater than 10");
         bronze_badge[msg.sender] = true;
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "6.png");
+        _setTokenURI(nextTokenId, "6.json");
     }
     function mint_silver_badge() public {
         require(!silver_badge[msg.sender], "user already have a badge");
@@ -113,7 +132,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
         require(streak > 30, "streak should be greater than 10");
         silver_badge[msg.sender] = true;
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "7.png");
+        _setTokenURI(nextTokenId, "7.json");
     }
 
     function mint_gold_badge() public {
@@ -123,26 +142,26 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
         require(streak > 30, "streak should be greater than 10");
         gold_badge[msg.sender] = true;
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "8.png");
+        _setTokenURI(nextTokenId, "8.json");
     }
 
     function mintBasicPiggy() public {
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "1.png");
+        _setTokenURI(nextTokenId, "1.json");
         nextTokenId++;
     }
 
     function mint_BronzePiggy() public payable {
         require(msg.value == 0.0001 ether, "not enough funds");
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "2.png");
+        _setTokenURI(nextTokenId, "2.json");
         piggyHealthType[nextTokenId] = BRONZE_HEALTH;
         nextTokenId++;
     }
     function mint_SilverPiggy() public payable {
         require(msg.value == 0.0003 ether, "not enough funds");
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "3.png");
+        _setTokenURI(nextTokenId, "3.json");
         piggyHealthType[nextTokenId] = SILVER_HEALTH;
         nextTokenId++;
     }
@@ -150,7 +169,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
     function mint_GoldPiggy() public payable {
         require(msg.value == 0.0005 ether, "not enough funds");
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "4.png");
+        _setTokenURI(nextTokenId, "4.json");
         piggyHealthType[nextTokenId] = GOLD_HEALTH;
         nextTokenId++;
     }
@@ -158,7 +177,7 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
     function mint_DiamondPiggy() public payable {
         require(msg.value == 0.0007 ether, "not enough funds");
         _mint(msg.sender, nextTokenId);
-        _setTokenURI(nextTokenId, "5.png");
+        _setTokenURI(nextTokenId, "5.json");
         piggyHealthType[nextTokenId] = DIAMOND_HEALTH;
         nextTokenId++;
     }
@@ -233,91 +252,6 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
         );
     }
 
-    // function depositToPiggy(uint256 _tokenId) external payable {
-    //     if (piggyInRace[_tokenId]) {
-    //         // If it's in a race, perform all race-specific checks.
-    //         require(races.length > 0, "DepositToPiggy: no race available");
-    //         Race storage activeRace = races[races.length - 1];
-    //         require(!activeRace.finished, "DepositToPiggy: race is over");
-    //         require(
-    //             block.timestamp >= activeRace.startTime,
-    //             "DepositToPiggy: race has not started"
-    //         );
-    //     }
-    //     PiggyData storage p = piggies[_tokenId];
-    //     require(
-    //         piggies[_tokenId].piggyHealth > 0,
-    //         "DepositeToPiggy: piggy with 0 health, only can be burned"
-    //     );
-    //     require(activePiggy[_tokenId], "depositToPiggy: piggy not active");
-    //     require(
-    //         msg.value == p.pledgeAmount,
-    //         "depositToPiggy: must send exact pledge amount"
-    //     );
-
-    //     // Check for a missed payment before processing the new deposit
-    //     if (block.timestamp > p.nextExpectedPaymentTimeRange) {
-    //         // A payment was missed, so decrease piggy health
-    //         p.piggyHealth -= 1;
-    //     }
-
-    //     bool onTime = block.timestamp <= p.nextExpectedPaymentTimeRange;
-
-    //     uint256 cycleIndex = (block.timestamp - p.startTime) / p.cycle;
-
-    //     p.totalSaved += msg.value;
-    //     p.depositCount += 1;
-    //     p.lastDeposit = block.timestamp;
-
-    //     p.nextExpectedPaymentTimeRange = block.timestamp + p.cycle;
-
-    //     // STREAK LOGIC (per-owner across multiple piggies)
-    //     address _owner = ownerOf(_tokenId);
-    //     StreakData storage s = UserStreak[_owner];
-
-    //     // Only count this piggy once per its cycle — check last counted cycle
-    //     if (piggyLastCountedCycle[_tokenId] != cycleIndex) {
-    //         // Not yet counted for this cycle -> update streak according to onTime/late
-    //         if (!s.initialized) {
-    //             // init streak for this user
-    //             s.initialized = true;
-    //             s.currentStreak = onTime ? 1 : 1; // treat first counted deposit as start of streak (change to 0 if you prefer)
-    //             s.bestStreak = s.currentStreak;
-    //             if (s.bestStreak > 0) {
-    //                 emit BestStreakUpdated(owner, s.bestStreak);
-    //             }
-    //         } else {
-    //             // already initialized
-    //             if (onTime) {
-    //                 s.currentStreak += 1;
-    //             } else {
-    //                 // late -> restart streak, count this deposit as first in new streak
-    //                 s.currentStreak = 1;
-    //             }
-
-    //             // update best if needed
-    //             if (s.currentStreak > s.bestStreak) {
-    //                 s.bestStreak = s.currentStreak;
-    //                 emit BestStreakUpdated(owner, s.bestStreak);
-    //             }
-    //         }
-
-    //         // mark this piggy as counted for this cycle
-    //         piggyLastCountedCycle[_tokenId] = cycleIndex;
-    //     } else {
-    //         // already counted this cycle -> do not change streaks
-    //         // (still accept the deposit and update piggy fields above)
-    //     }
-
-    //     emit DepositMade(
-    //         _tokenId,
-    //         msg.sender,
-    //         msg.value,
-    //         p.totalSaved,
-    //         p.nextExpectedPaymentTimeRange
-    //     );
-    // }
-
     function depositToPiggy(uint256 _tokenId) external payable {
         if (piggyInRace[_tokenId]) {
             require(races.length > 0, "DepositToPiggy: no race available");
@@ -391,11 +325,11 @@ contract MRPIGGY is ERC721, ERC721URIStorage, ERC721Burnable {
     }
 
     function _update(
-        address _to,
-        uint256 _tokenId,
-        address _auth
-    ) internal virtual override returns (address) {
-        return super._update(_to, _tokenId, _auth);
+        address to,
+        uint256 tokenId,
+        address auth
+    ) internal override(ERC721, ERC721Enumerable) returns (address) {
+        return super._update(to, tokenId, auth);
     }
 
     function Break_Your_Piggy(uint256 tokenId) external {

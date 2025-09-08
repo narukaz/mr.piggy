@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 const pig = {
   id: 1,
   name: "Sir Oinksalot",
@@ -9,6 +10,7 @@ const pig = {
   goal: "$500",
   nextCycle: "15d 2h 30m",
 };
+
 function Race() {
   const StatItem = ({ icon, label, value }) => (
     <div className="flex items-center gap-2">

@@ -101,7 +101,6 @@ function PiggyCard({
       return;
     }
 
-    // State 3: Transaction succeeded
     if (isConfirmed) {
       setIsToast({
         status: "success",
@@ -110,18 +109,16 @@ function PiggyCard({
       });
 
       const timer = setTimeout(() => {
-        navigate("/farm");
-        setIsToast(null); // Clear toast after navigation
+        navigate("/farm?status=new");
+        setIsToast(null);
       }, 2000);
 
-      // Clean up the timer and reset the hook's state for the next transaction
       return () => {
         clearTimeout(timer);
         reset();
       };
     }
 
-    // State 4: An error occurred
     if (writeError || receiptError) {
       const error = writeError || receiptError;
       setIsToast({
@@ -129,7 +126,7 @@ function PiggyCard({
 
         message: error.shortMessage || "Transaction failed.",
       });
-      // Reset the hook's state so the user can try again
+
       const errorTimer = setTimeout(() => {
         setIsToast(null);
         reset();

@@ -178,17 +178,17 @@ const ActivePiggies = ({
                       />
                       <StatItem
                         icon="/amount.svg"
-                        label="Balance (sonic)"
+                        label={`Balance(${import.meta.env.VITE_TOKEN_NAME})`}
                         value={formatEther(pig.totalSaved)}
                       />
                       <StatItem
                         icon="/goal.svg"
-                        label="Goal (sonic)"
+                        label={`Goal (${import.meta.env.VITE_TOKEN_NAME})`}
                         value={formatEther(pig.goalAmount)}
                       />
                       <StatItem
                         icon="/pigin.svg"
-                        label="Pledge (sonic)"
+                        label={`Pledge (${import.meta.env.VITE_TOKEN_NAME})`}
                         value={formatEther(pig.pledgeAmount)}
                       />
                       <StatItem

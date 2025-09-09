@@ -38,6 +38,8 @@ const piggyTiers = [
   },
 ];
 
+// console.log(import.meta.env.VITE_CONTRACT_ADDRESS);
+
 function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 mt-52">

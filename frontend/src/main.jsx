@@ -9,35 +9,36 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { injected } from "@wagmi/connectors";
 
-const sonicTestnet = {
-  id: 146,
-  name: "Sonic Mainnet",
+const NETWORK = {
+  id: Number(import.meta.env.VITE_CHAIN_ID),
+  name: import.meta.env.VITE_NETWORK_NAME,
   nativeCurrency: {
-    name: "Sonic",
-    symbol: "S",
-    decimals: 18,
+    name: import.meta.env.VITE_TOKEN_NAME,
+    symbol: import.meta.env.VITE_SYMBOL,
+    decimals: Number(import.meta.env.VITE_DECIMALS),
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc.soniclabs.com/"],
+      http: [import.meta.env.VITE_RPC_URL],
     },
   },
   blockExplorers: {
     default: {
-      name: "Sonic Mainnet Explorer",
-      url: "https://explorer.soniclabs.com/",
+      name: import.meta.env.VITE_BLOCK_EXPLORER_NAME,
+      url: import.meta.env.VITE_EXPLORER_URL,
     },
   },
-  testnet: true,
+  testnet: import.meta.env.VITE_ISTESTNET == "true",
 };
 
+console.log(NETWORK);
 const config = createConfig({
-  chains: [sonicTestnet],
+  chains: [NETWORK],
 
   connectors: [injected()],
 
   transports: {
-    [sonicTestnet.id]: http(),
+    [NETWORK.id]: http(),
   },
   ssr: true,
 });

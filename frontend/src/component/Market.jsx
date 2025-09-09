@@ -90,7 +90,9 @@ function PiggyCard({
         {name}
       </h2>
       <p className="font-semibold text-pink-500">
-        {piggy_price === "0" ? "Free" : `${piggy_price} SONIC`}
+        {piggy_price === "0"
+          ? "Free"
+          : `${piggy_price} ${import.meta.env.VITE_TOKEN_NAME}`}
       </p>
       <ul className="list-disc list-inside space-y-2 text-sm text-gray-700 leading-normal self-start pl-4">
         {bullets.map((bullet, index) => (

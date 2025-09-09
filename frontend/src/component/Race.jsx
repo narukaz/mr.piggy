@@ -325,7 +325,8 @@ function Race() {
                 <h3 className="text-[#ED981D] text-2xl select-none font-Pixel">
                   Rewards:{" "}
                   <span className="font-sans">
-                    {formatEther(raceDetails.reward)} Sonics
+                    {formatEther(raceDetails.reward)}{" "}
+                    {import.meta.env.VITE_TOKEN_NAME}
                   </span>
                 </h3>
               </div>
@@ -372,17 +373,23 @@ function Race() {
                         <StatItem
                           icon="/amount.svg"
                           label="Balance"
-                          value={`${formatEther(pig.totalSaved)} Sonics`}
+                          value={`${formatEther(pig.totalSaved)} ${
+                            import.meta.env.VITE_TOKEN_NAME
+                          }`}
                         />
                         <StatItem
                           icon="/goal.svg"
                           label="Goal"
-                          value={`${formatEther(pig.goalAmount)} Sonics`}
+                          value={`${formatEther(pig.goalAmount)} ${
+                            import.meta.env.VITE_TOKEN_NAME
+                          }`}
                         />
                         <StatItem
                           icon="/pigin.svg"
                           label="Pledge"
-                          value={`${formatEther(pig.pledgeAmount)} Sonics`}
+                          value={`${formatEther(pig.pledgeAmount)} ${
+                            import.meta.env.VITE_TOKEN_NAME
+                          }`}
                         />
                         <StatItem
                           icon="/cycle.svg"

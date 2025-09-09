@@ -187,7 +187,7 @@ function ActivatePiggyDialog({
               htmlFor="totalAmount"
               className="block text-sm font-medium text-gray-700"
             >
-              Total SONIC to Save
+              Total {import.meta.env.VITE_TOKEN_NAME} to Save
             </label>
             <input
               id="totalAmount"
@@ -204,7 +204,7 @@ function ActivatePiggyDialog({
               htmlFor="pledgeAmount"
               className="block text-sm font-medium text-gray-700"
             >
-              Pledge per Cycle (SONIC)
+              Pledge per Cycle ({import.meta.env.VITE_TOKEN_NAME})
             </label>
             <input
               id="pledgeAmount"

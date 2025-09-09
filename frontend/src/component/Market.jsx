@@ -22,7 +22,7 @@ function PiggyCard({
   const navigate = useNavigate();
 
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: function_name,
     value:

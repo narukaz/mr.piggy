@@ -35,7 +35,7 @@ const StatItem = ({ icon, label, value }) => (
 
 function BreakPiggyButton({ tokenId, onStatusChange, onSuccess }) {
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "Break_Your_Piggy",
     args: [tokenId],
@@ -279,7 +279,7 @@ export default function App() {
     try {
       if (activeTab === "idle") {
         const rawIdleData = await readContract(config, {
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: master_abi,
           functionName: "user_idle_tokens",
           account: account.address,
@@ -292,7 +292,7 @@ export default function App() {
         setActivePiggies([]);
       } else if (activeTab === "active") {
         const rawActiveData = await readContract(config, {
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: master_abi,
           functionName: "user_active_tokens",
           account: account.address,
@@ -336,7 +336,7 @@ export default function App() {
     try {
       onStatusChange({ status: "info", message: "Preparing deposit..." });
       const { request } = await simulateContract(config, {
-        address: contract.contract_address,
+        address: import.meta.env.VITE_CONTRACT_ADDRESS,
         abi: master_abi,
         functionName: "depositToPiggy",
         args: [tokenId],

@@ -36,7 +36,7 @@ function PiggyCard({
       case "Basic Piggy":
         {
           writeContract({
-            address: contract.contract_address,
+            address: import.meta.env.VITE_CONTRACT_ADDRESS,
             abi: mr_piggy_abi,
             functionName: function_name,
             args: [],
@@ -45,7 +45,7 @@ function PiggyCard({
         break;
       case "Bronze Piggy":
         writeContract({
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: mr_piggy_abi,
           functionName: function_name,
           args: [],
@@ -54,7 +54,7 @@ function PiggyCard({
         break;
       case "Silver Piggy":
         writeContract({
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: mr_piggy_abi,
           functionName: function_name,
           args: [],
@@ -63,7 +63,7 @@ function PiggyCard({
         break;
       case "Gold Piggy":
         writeContract({
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: mr_piggy_abi,
           functionName: function_name,
           args: [],
@@ -72,7 +72,7 @@ function PiggyCard({
         break;
       case "Diamond Piggy":
         writeContract({
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: mr_piggy_abi,
           functionName: function_name,
           args: [],

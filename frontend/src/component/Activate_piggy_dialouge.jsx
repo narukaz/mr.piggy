@@ -30,7 +30,7 @@ function ActivatePiggyDialog({
 
   // 1. Simulate the contract call to validate inputs and prepare the transaction
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "activatePiggy",
     args: [

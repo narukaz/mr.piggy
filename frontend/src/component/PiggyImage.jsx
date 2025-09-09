@@ -9,7 +9,7 @@ function PiggyImage({ tokenId }) {
   const [error, setError] = useState(null);
 
   const { data: tokenUri, error: uriError } = useReadContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "tokenURI",
     args: [tokenId],

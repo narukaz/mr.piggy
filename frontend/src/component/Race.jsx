@@ -25,7 +25,7 @@ const StatItem = ({ icon, label, value }) => (
 
 const JoinRaceButton = ({ onStatusChange, onSuccess }) => {
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "JoinRace",
     value: parseEther("0.5"),
@@ -82,7 +82,7 @@ const PigInRaceButton = ({
   isRaceActive,
 }) => {
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "depositToPiggy",
     args: [tokenId],
@@ -135,7 +135,7 @@ const PigInRaceButton = ({
 
 const QuitRaceButton = ({ tokenId, onStatusChange, onSuccess }) => {
   const { data: simulation, error: simulationError } = useSimulateContract({
-    address: contract.contract_address,
+    address: import.meta.env.VITE_CONTRACT_ADDRESS,
     abi: master_abi,
     functionName: "quit_race",
     args: [tokenId],
@@ -202,7 +202,7 @@ function Race() {
     setIsLoading(true);
     try {
       const totalRaces = await readContract(config, {
-        address: contract.contract_address,
+        address: import.meta.env.VITE_CONTRACT_ADDRESS,
         abi: master_abi,
         functionName: "total_races",
       });
@@ -211,7 +211,7 @@ function Race() {
       if (raceCount > 0) {
         const latestRaceIndex = raceCount - 1;
         const data = await readContract(config, {
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: master_abi,
           functionName: "getRace",
           args: [latestRaceIndex],
@@ -230,7 +230,7 @@ function Race() {
 
       if (account.status === "connected") {
         const userPiggiesRaw = await readContract(config, {
-          address: contract.contract_address,
+          address: import.meta.env.VITE_CONTRACT_ADDRESS,
           abi: master_abi,
           functionName: "getUserRacingPiggies",
           args: [account.address],
